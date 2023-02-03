@@ -1,0 +1,715 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Public Real Estate Debt</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+		<link rel="stylesheet" href="tweaks.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="imgs/door.jpg" >
+
+					<h2 style="line-height: 0.8em;">RE01<span class="subtitle"><br />Lecture 11: Public Real Estate Debt 2</span></h2>
+
+					<p style="font-size: 0.8em; margin-top: 1.4em;">Dr. Thies Lindenthal
+						<br /><a href="mailto:htl24@cam.ac.uk">htl24@cam.ac.uk</a>
+						<br />
+						<br />
+						February 2023</p>
+				</section>
+
+
+				<section data-markdown>
+					<textarea data-template>
+						## MBS<span class="subtitle"><br>How to assess their risk? How to price them?</span>
+
+						<img src='imgs/mbs.png'>
+					</textarea>
+				</section>
+
+
+
+				<section data-markdown >
+					<textarea data-template>
+						## DIY Securitisation<span class="subtitle"><br/>Stylised example to explore risk assessment and pricing</span>
+						* Pool of 45 residential mortgages
+						* Probability of default in a given month: 25% (I know, it is crazy)
+						* Structure into two tranches
+							- Junior: 20 Mortgages
+							- Senior: 25 (?) Mortgages
+						* Junior takes first losses
+						* Only if Junior is wiped out, Senior will be affected
+
+					</textarea>
+				</section>
+
+				<section>
+						<h2> CMO<span class="subtitle"><br>Structuring mortgages into CMO (CDO example later)</span></h2>
+						<div class="boxwrapper" width='100%'>
+							<div class="box1">
+								<ul>
+									<li>Assume population of mortgages
+										<ul>
+											<li>All have default risk of 0.15</li>
+										<li>In the event of default, recovery rate is zero</li>
+									</ul>
+								</li>
+									<li>Form portfolios of four randomly selected mortgages</li>
+									<li>Tranche each mortgage pool into an A bond (50%), B bond (25%) and C bond (25%) with default risks going from C to B to A
+									<ul><li>Form CDOs with the B bonds later</li></ul></li>
+									<li>What is the default risk in each tranche?</li>
+								</ul>
+							</div>
+ 							<div class="box2">
+								<img src="imgs/cmo1.png" height="450" style='margin-left: 2em;'>
+							</div>
+						</div>
+				</section>
+
+
+				<section data-markdown>
+					<textarea data-template>
+						## Default risk in the mortgage pool<span class="subtitle"><br>4 mortgages, P(default) = 0.15</span>
+
+						* We are assuming that default risk is independent.
+							- Thus risk of mortgage 1 and mortgage 2 defaulting is:
+						$ p_1*p_2 = 0.15^2 = 0.0225 $
+						* The risk of 0, 1, 2 … r defaults is given by the standard binomial expansion
+						<p>$\frac{n!}{r!(n-r)!} p^r(1-p)^{n-r}$,</p>
+						where n is the size of the pool, r is the number of defaults, p is the probability of default, and ! indicates factorials
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Default risk in the mortgage pool<span class="subtitle"><br>(remember $0! = 1$ and $X^0 = 1$)</span>
+
+						* No defaults $\frac{4!}{0!(4-0)!} 0.15^0(1-0.15)^{4-0} = 1 * 1 * 0.85^4 = 0.522$
+						* 2 defaults $\frac{4!}{2!(4-2)!} 0.15^2(1-0.15)^{4-2} =
+						6 * 0.15^2 * 0.85^2 = 0.0975$
+						* ...
+					</textarea>
+				</section>
+
+<section data-markdown>
+	<textarea data-template>
+		##  Summary: Default risks in pool<span class="subtitle"><br>4 Mortgages, each having a probability of default of 0.15</span>
+
+
+		<span class="smalltable">
+			<br>
+
+		| Num. defaults | Permutations | Prob. |
+		|:----:|:----: |----:|
+		| 0 | 1 | 0.5220 |
+		| 1 | 4 | 0.3685 |
+		| 2 | 6 | 0.0975 |
+		| 3 | 4 | 0.0115 |
+		| 4	| 1 | 0.0005 |
+
+		</span>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Securitize and tranche <span class="subtitle"><br>Issue securities using cashflow from pool & collateral from mortgages</span>
+
+		* Create three classes of security from the mortgage pool
+			- The Senior Class: Class A = 50% of issue
+			- The Middle Class: Class B = 25% of issue
+			- The Bottom Class: Class C = 25% of issue
+		* Any losses carried by C, then B, then A
+		* For simplicity assume default = 100% loss
+			- In reality, recovery rate > 0
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Prob. of default for bond classes<span class="subtitle"><br>Seniority and size of tranches determine likelihood of default</span>
+
+		*  A: 50%, B: 25%, C: 25%
+		* $ \small P(def_A) < P(def_B) < P(def_C) $
+			- In case of no defaults, C is safe
+			- If one default, C wiped out, B is safe
+			- If two defaults, C and B go, A is safe
+			Tranche
+			- A only affected by three or four defaults
+
+
+		|Tranche | P(default) |
+		|---|---:|
+		| A-50% | 0.0120 |
+		| B-25% | 0.1095 |
+		| C-25% | 0.4780 |
+
+		* Tranche A and B are safer than mortgages in pool! Hurray!
+
+	</textarea>
+</section>
+
+
+
+<section>
+		<h2> create CDO from CMO tranches<span class="subtitle"><br>Take B-bonds randomly from four CMOs to create CDO</span></h2>
+		<div class="boxwrapper" width='100%'>
+			<div class="box1">
+				<ul>
+					<li>Continue to assume the default risks are independent</li>
+					<li>We will tranche the CDO 50-25-25 as before</li>
+					<li>What are the default probabilities in each tranche?</li>
+					<li>Calculation same as previous: but P(def) is now 0.1095 … </li>
+				</ul>
+			</div>
+			<div class="box2">
+				<img src="imgs/cdo.png" height="450" style='margin-left: 2em;'>
+			</div>
+		</div>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		##  Summary: Default risks in pool<span class="subtitle"><br>Pool consists of 4 Class B bonds from earlier CMO. P(def.)=0.1095.
+</span>
+
+		* Probability of default for each of these Class B bonds is 0.1095
+			- calculations as in earlier slides
+
+
+		<span class="smalltable">
+			<br>
+
+		| Num. defaults | Permutations | Prob. |
+		|:----:|:----: |----:|
+		| 0 | 1 | 0.6288 |
+		| 1 | 4 | 0.3093 |
+		| 2 | 6 | 0.0571 |
+		| 3 | 4 | 0.0047 |
+		| 4	| 1 | 0.0001 |
+
+		</span>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Tranche the CDO  <span class="subtitle"><br></span>
+
+		* As before, the C tranche is caught by one default, the B by two defaults, but the A only by three or four defaults
+		* The A tranche appears to be less risky than the A bonds in the original issue
+		* The A tranche equivalent to 12.5% of original pool values…
+
+		|Tranche | P(default) |
+		|---|---:|
+		| A-50% | 0.0048 |
+		| B-25% | 0.0619 |
+		| C-25% | 0.3712 |
+
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## CDO squared <span class="subtitle"><br>“Oops, they did it again..”</span>
+
+		* Let’s take the B-tranche from four CDOs and combine them into a CDO<sup>2</sup>
+		* Still assume default risk is independent …
+		* Tranche it 50%, 25%, 25% again …
+		* What are default probabilities of tranches?
+		* I am sure you *know* what is coming
+
+	</textarea>
+</section>
+
+<section data-markdown data-background-image="imgs/alchimist.jpg">
+	<textarea data-template>
+		##  <span class="whitefont">CDO<sup>2</sup>: Too good to be true?</span> <span class="subtitle whitefont"><br>Alchemy, gold from base metal! What is wrong with this story?</span>
+
+		<span class="tablewhitefont">
+			<br>
+
+		| Num. defaults | Permutations | Prob. |
+		|:----:|:----: |----:|
+		| 0 | 1 | 0.7745 |
+		| 1 | 4 | 0.2044 |
+		| 2 | 6 | 0.0202 |
+		| 3 | 4 | 0.0009 |
+		| 4	| 1 | 0.0000 |
+
+
+		|Tranche | P(default) |
+		|---|---:|
+		| A-50% | 0.0009 |
+		| B-25% | 0.0211 |
+		| C-25% | 0.2255 |
+
+		</span>
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## What's wrong with story? <span class="subtitle"><br>Fundamental flaw </span>
+
+		* An event is independent if (and only if) the occurrence of event A gives us no information about the occurrence of event B.
+		* Are mortgage defaults *really* uncorrelated?
+		* What causes a mortgage to default?
+			- Random events
+			- Systematic events
+		* As pool size increases, diversification occurs
+			- Random events become less significant
+			- Systematic events become more significant
+
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Reality check <span class="subtitle"><br></span>
+
+		* What factors increase the probability of  mortgage default in the residential market?
+		* What factors increase the risk of  mortgage default in the commercial market?
+		* Are these factors specific or systematic?
+		* Do they vary over time?
+		* Are residential and commercial default risk factors linked together?
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Introducing correlations<span class="subtitle"><br>See, e. g., <a href='https://www.jstor.org/stable/27648292 '>Coval et al. “The Economics of Structured Finance”</a></span>
+
+		* The correlation between defaults of two assets is defined as $ corr_{def.} = \frac{P_{dd}-P_d^2}{P_d(1-P_d)}$, <br>with $P_{dd}$ being the probability of joint default
+		* This implies: $ corr_{def.} P_d(1-P_d) + P_d^2 = P_{dd}$
+		* If $corr_{def.} > 0$ and $P_d > 0$ ...
+		* ... then $P_{dd} > P_d^2$
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Calculating joint def. probabilities <span class="subtitle"><br></span>
+
+		* Staying with $P_{def.} = 0.15$
+		* With independence, $P_{dd} = 0.15^2 = 0.0225$
+			- $corr_{def.} = 0$, thus $ 0 * 0.15 * 0.85 + 0.15^2 = 0.0225$
+		* Now suppose default correlation were small but positive—say 0.20
+			- $ 0.2 * 0.15 *0.85 + 0.15^2 = 0.048$
+			- <mark>risk 2.13 times higher</mark>
+		* Now suppose default correlation were strongly positive—say 0.50
+			- $ 0.5 * 0.15 * 0.85 + 0.15^2 = 0.086$
+			- <mark>risk 3.83 times higher</mark>
+		* Joint default probabilities with more than 2 mortgages not covered here
+			- Simulate yourself in R/Stata/Excel/...
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Independence vs. perfect corr. <span class="subtitle"><br> Wide range of possible outcomes</span>
+
+		* Initial mortgage pool: 4 Mortgages, with prob. of default of 0.15
+		* Correlation between defaults either 0 or 1
+			- With corr=1, all mortgages either default at the same time (or survive)
+
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/corrs.png" height="350">
+			<p class='source'></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Bye bye, AAA!  <span class="subtitle"><br>Positive correlation hinders separation of risk
+</span>
+
+		* With high correlation in assets in pool, the allocation of risk across CMO tranches shifts
+			- More risk in senior tranches
+			- Less risk in junior
+
+		* Effect on earlier examples is huge:
+		| a | b | c | d |
+		|---|:---:|:---:|---:|
+		| CMO Tranche | P(default, corr=0) | P(default, corr=1) | $ \Delta $ |
+		| A-50% | 0.0120 | 0.15 | 12.5x |
+		| B-25% | 0.1095 | 0.15 | 1.4x  |
+		| C-25% | 0.4780 | 0.15 | 0.3x  |
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Rating and default risk <span class="subtitle"><br>Rating agencies knew that correlation was not zero and modelled accordingly</span>
+
+
+		* Used joint cumulative distribution function techniques, e.g. copula models
+		* Key issues
+			- what distribution functions do you use for modelling?
+			- do you assume that the correlation is uniform and not time varying?
+		* Complexity increases exponentially
+
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Even more Complexity <span class="subtitle"><br>More factors affecting rating
+</span>
+
+		* Estimating probability of default
+		* Estimating loss given default
+		* Factors to be considered:
+			- Pool size
+			- Pool diversity
+			- LTV and DSCR ratios
+			- Borrower and tenant quality
+			- Property quality
+			- Lease quality and profile
+		* Importance of factors ⇨ Type of issue
+
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		##  Simulate CDO and CDO<sup>2</sup>.<span class="subtitle"><br></span>
+
+		* <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a> simulate CDO or CDO<sup>2</sup>.
+			- Reduce complexity, simulate. Change underlying assumptions to see sensitivity of expected returns and risk of cashflows.
+
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/coval1.png" height="350">
+			<p class='source'>Source: <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a></p>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Model sensitivity: Correlations, CDO <span class="subtitle"><br>How much do expected payoffs for tranches change if correlations change?</span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/coval2.png" height="400">
+			<p class='source'>Source: <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Correlation sensitivity, CDO<sup>2</sup> <span class="subtitle"><br>This is big!</span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/coval3.png" height="400">
+			<p class='source'>Source: <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a></p>
+		</div>
+	</textarea>
+</section>
+
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Model sensitivity: P(Def.), CDO <span class="subtitle"><br>Expected payoffs for tranches if probability of defaults moves</span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/coval4.png" height="400">
+			<p class='source'>Source: <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## P(def.) sensitivity, CDO<sup>2</sup> <span class="subtitle"><br>Again, massive changes!</span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/coval5.png" height="400">
+			<p class='source'>Source: <a href='https://www.jstor.org/stable/27648292 '>Coval et al.</a></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Prepayment risk <span class="subtitle"><br>Borrowers have the right to prepay mortgage</span>
+
+		* Recall the Pass Through Security from previous week
+		* Total loan pool = $100,000,000
+		* All loans 5 years to run, 8% interest rate, amortising
+		* Service charge at 1% of loan outstanding
+		* Investors base their valuation on expected cashflows
+		<img src="imgs/prepayment-cf.png" height=270>
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Timing changes <span class="subtitle"><br>Prepayments change shape of cashflow</span>
+
+		* In the absence of prepayment, suppose investors price the expected cashflow of the security using a (constant) YTM of 6.0%
+		* This gives a price of $1,027.51 representing a premium of 2.75%
+		* Now assume that mortgages prepay at a rate of 20% of the outstanding balance…
+		* The security holders get the prepayments—but subsequent repayments fall, altering the shape of the cashflow
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Front-loaded payments <span class="subtitle"><br></span>
+
+		<img src="imgs/prepayment-cf-20.png" height=270>
+
+		* NPV at the same 6% rate gives a value of $1,021.33, premium falls to 2.13%
+		* Shape of cashflow changes significantly, which might affect liability matching
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Notes on calculations <span class="subtitle"><br></span>
+
+		* The prepayment is calculated as 0.2 times balance at end of year (could model 0.2 * start balance)
+		* Repayments calculated on annuity basis on outstanding balance at start of year
+			- you cannot just divide previous repayment by 1.2<br>
+			$ PMT = \frac{LoanOS * i } {1-(1+i)^{-t}}$
+		* Service charge is on declining balance
+		* Cashflow = Repayment + Prepayment – Servicing
+		* Assumes no prepayment penalties (could be added to model)
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## shape of cashflow <span class="subtitle"><br>Cashflows for 10-year note at different prepayment assumptions</span>
+
+		<div class="figure">
+			<p class="title">Cashflow with Prepayment</p>
+			<img src="imgs/prepayment-cf-fig.png" height=400>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## How to model prepayment? <span class="subtitle"><br></span>
+
+		* Based on historic evidence?
+			- But pre-payment varies
+			- By economic environment
+			- By characteristics of borrowers
+			- By interaction of these two
+		* Thus dangerous to apply constant rate or standard prepayment curve
+		* Also data issues …
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Proportional Hazard Models<span class="subtitle"><br>Estimating the likelihood of prepayment based on loan specific factors</span>
+
+		* Data are “censored”. Not all mortgages in sample(s) have prepaid/repaid
+			- Estimation must account for that…
+		* Akin to life/mortality table
+		* Model the “hazard rate” and the “survival rate” after N years (Cox regression)
+		* Identify “hazard” factors that change rate
+		* Apply this to mortgage pool being valued
+		* BUT … assumes future is same as modelling period, or requires factor forecasts
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Bringing risks together <span class="subtitle"><br></span>
+
+		* The borrower has two options
+			- A default option
+			- A prepayment option
+		* Maybe model these individually using option pricing?
+		* But they interact or compete!
+			- Exercising the prepayment option extinguishes the default option
+			- Exercising the default option extinguishes the prepayment option
+		* See: Ambrose and Sanders (2003) “Commercial Mortgage-Backed Securities: Prepayment and Default”, J. Real Estate Finance & Economics, 26, 179-196
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		##  If we know how to model MBS...<span class="subtitle"><br></span>
+
+		* Models have to be calibrated
+		* Remember: Garbage In, Garbage Out …
+		* What histories were being fed in?
+		* Stress testing … versus belief systems
+		* Distributions and asymmetry
+			- Dangerous to assume normality
+			- Tail dependence...
+		* CDOs, CDS, systematic and systemic risk
+		* Rating agencies and moral hazard
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## US CMBS spreads <span class="subtitle"><br>Risk premia for AAA certificates up to 12%!</span>
+
+		* 2007/2008 saw exploding risk premia for CMBS, even “AAA”. Do investors still believe in the ratings?
+
+		<img src="imgs/spreads.png" height=350>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Commercial Real Estate Debt<span class="subtitle"><br>From loan defaults to MBS trouble?</span>
+
+		<div class='figure'>
+			<p class='title'>Delinquencies, All properties, 2003–2014</p>
+			       <img src="imgs/cmbs-defaults.png" height="350">
+			<p class='source'></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Highly Contagious <span class="subtitle"><br>Defaults of MBS also affected industry via Credit Default Swaps (CDS)</span>
+
+		* In 2007, total outstanding CDS amounted to $62 trillion (!)
+			- Banks (44%), Hedge Funds (32%), Insurance companies (17%)
+
+		* AIG had sold $440 billion CDS on mortgage and corporate debt CDOs
+			- Bail-out by US government in 2008
+
+
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Quo vadis, MBS? <span class="subtitle"><br></span>
+
+		* Recovery of Secondary Markets?
+			- Restructuring and work-out
+			- Recovery of underlying market
+			- Change of sentiment, return opportunities
+		* Recovery of Primary Markets
+			- Plain vanilla offerings
+			- Cautious underwriting
+		* The Regulatory/Institutional Environment
+			- Capital Requirements Directive / Basel III
+			- Transparency, reporting and due diligence
+			- The credit rating agencies?
+		* Technological change
+			-Blockchains and smart contracts?
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Fed used MBS for QE  <span class="subtitle"><br>Quantitative Easing: Federal reserve bought treasuries and MBS. Lots! </span>
+
+		* In 2018, Fed owned roughly 1/3 of the agency MBS market, worth about $1.7 trillion
+		<div class='figure'>
+			<p class='title'>MBS inventory of FED</p>
+			       <img src="imgs/fed.jpg" height="400">
+			<p class='source'></p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Healthy spread <span class="subtitle"><br>Yield on MBS about 200bps lower than mortgage rates.</span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/mbs-mortgages-spread.webp" height="300">
+			<p class='source'> Data: Bloomberg, using weekly data as of 7/22/2022. Figure: Schwab</p>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Commercial Real Estate Waterfalls <span class="subtitle"><br> How are cash flows distributed between private equity sponsor and passive investors?</span>
+
+		* Equity investors have less information and control over the project than sponsor (operator/syndicator/general partner)
+		* To align interests, create incentives and manage risk and maximise profits, cashflows are structured
+		 	- Passive investors are typically receiving cash flows first. "Preferred return"
+			- Only if they have received preferred return, remaining CF are shared with sponsor ("split")
+			- Multiple layers possible
+		* Similar to different tranches in an MBS
+		* <mark>Waterfall metaphor: First, fill the higher pools (for passive investors). Only if cash flow reaches lower pools, the sponsor can claim their share.</mark>
+	</textarea>
+</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				transition: 'none',
+				width: 1244,
+				height: 700,
+				margin: 0.1,
+				transition: "none",
+				math: {
+					mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					// pass other options into `MathJax.Hub.Config()`
+					TeX: { Macros: { RR: "{\\bf R}" } },
+					tex2jax: {
+  					inlineMath: [['$','$'], ['\\(','\\)']],
+    				processEscapes: true
+  					}
+				},
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
