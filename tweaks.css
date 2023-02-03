@@ -134,19 +134,21 @@ p.smalltable >* td,th {
         margin: 0;
         font-size: 0.5em;}
 
+.tablewhitefont >* td,th,thead {
+                border: none;
+                color: #ffffff;
+                padding: 0;
+                margin: 0;
+                font-size: 0.7em;}
+
 
 span.smalltable >* td,th {
     border: none;
+    color: #000000;
     padding: 0;
     margin: 0;
     font-size: 0.5em;}
 
-span.tablewhitefont >* td,th {
-  color: #ffffff;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.7em;}
 
 
 div.smalltable >* tr,td,th{

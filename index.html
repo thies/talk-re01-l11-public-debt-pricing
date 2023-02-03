@@ -83,10 +83,8 @@
 
 						* We are assuming that default risk is independent.
 							- Thus risk of mortgage 1 and mortgage 2 defaulting is:
-						$ p_1*p_2 = 0.15^2 = 0.0225 $
-						* The risk of 0, 1, 2 … r defaults is given by the standard binomial expansion
-						<p>$\frac{n!}{r!(n-r)!} p^r(1-p)^{n-r}$,</p>
-						where n is the size of the pool, r is the number of defaults, p is the probability of default, and ! indicates factorials
+						$ p_1 * p_2 = 0.15^2 = 0.0225 $
+						* The risk of 0, 1, 2 … r defaults is given by the standard binomial expansion <br >$\frac{n!}{r!(n-r)!} p^r(1-p)^{n-r}$,<br> where n is the size of the pool, r is the number of defaults, p is the probability of default, and ! indicates factorials
 
 					</textarea>
 				</section>
@@ -244,7 +242,7 @@
 		<span class="tablewhitefont">
 			<br>
 
-		| Num. defaults | Permutations | Prob. |
+		| <span class='whitefont'>Num. defaults</span> | <span class='whitefont'>Permutations</span> | <span class='whitefont'>Prob.</span> |
 		|:----:|:----: |----:|
 		| 0 | 1 | 0.7745 |
 		| 1 | 4 | 0.2044 |
@@ -253,7 +251,7 @@
 		| 4	| 1 | 0.0000 |
 
 
-		|Tranche | P(default) |
+		|<span class='whitefont'>Tranche</span>|<span class='whitefont'> P(default)</span> |
 		|---|---:|
 		| A-50% | 0.0009 |
 		| B-25% | 0.0211 |
@@ -291,6 +289,18 @@
 		* Do they vary over time?
 		* Are residential and commercial default risk factors linked together?
 
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Systematic increase in leverage <span class="subtitle"><br></span>
+		<div class='figure'>
+			<p class='title'></p>
+			       <img src="imgs/debt-income-ratios.png" height="550">
+			<p class='source'>Source: <a href="http://www.nber.org/papers/w13936">Mian & Sufi (2008)</a></p>
+		</div>
 	</textarea>
 </section>
 
@@ -350,9 +360,8 @@
 			- Less risk in junior
 
 		* Effect on earlier examples is huge:
-		| a | b | c | d |
+		| CMO Tranche | P(default, corr=0) | P(default, corr=1) | Change |
 		|---|:---:|:---:|---:|
-		| CMO Tranche | P(default, corr=0) | P(default, corr=1) | $ \Delta $ |
 		| A-50% | 0.0120 | 0.15 | 12.5x |
 		| B-25% | 0.1095 | 0.15 | 1.4x  |
 		| C-25% | 0.4780 | 0.15 | 0.3x  |
